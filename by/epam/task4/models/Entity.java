@@ -1,10 +1,21 @@
 package by.epam.task4.models;
 
-public class Entity {
+public abstract class Entity {
     private int id;
     private String name;
 
     public Entity() {
+        id = 0;
+        name = null;
+    }
+
+    public Entity(String name){
+        this.name = name;
+    }
+
+    public Entity(int id, String name){
+        this.id = id;
+        this.name = name;
     }
 
     public Entity(int id) {

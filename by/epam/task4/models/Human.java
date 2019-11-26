@@ -13,6 +13,34 @@ public class Human extends Entity {
         super();
     }
 
+    public Human(int id, String name, String surname, int age, int role){
+        super(id,name);
+        this.surname = surname;
+        this.age = age;
+
+        switch (role){
+            case 1:
+                this.role = new Role("Владелец");
+                break;
+            case 2:
+                this.role = new Role("Лесник");
+                break;
+            case 3:
+                this.role = new Role("Посетитель");
+                break
+            default:
+                this.role = new Role("Отсутствует");
+                break;
+        }
+    }
+
+    public Human(String name, String surname, int age, Role role){
+        super(name);
+        this.surname = surname;
+        this.age = age;
+        this.role = role;
+    }
+
     //удалить возможно ( есть во всех моделях)
     public Human(int id) {
         super(id);
@@ -44,10 +72,9 @@ public class Human extends Entity {
 
     @Override
     public String toString() {
-        return "Human {" +
+        return "Human{ name = '" + super.getName() + "', " +
                 "surname='" + surname + '\'' +
                 ", age=" + age +
-                ", role=" + role.getName() +
                 '}';
     }
 }

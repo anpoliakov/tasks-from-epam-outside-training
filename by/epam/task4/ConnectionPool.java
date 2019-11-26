@@ -14,17 +14,18 @@ public class ConnectionPool {
 
     public ConnectionPool(String login, String password, String url, String driver, int initNumberConnections) {
         try {
+            //можно не регистрировать драйвер
             Class.forName(driver);
+            this.url = url;
+            this.login = login;
+            this.password = password;
+            for (int i = 0; i < initNumberConnections; i++) {
+                availableConnections.add(createConnection());
+            }
+
         } catch (Exception e) {
             //LOG файл
             e.printStackTrace();
-        }
-
-        this.url = url;
-        this.login = login;
-        this.password = password;
-        for (int i = 0; i < initNumberConnections; i++) {
-            availableConnections.add(createConnection());
         }
     }
 
@@ -62,10 +63,5 @@ public class ConnectionPool {
                 throw new NullPointerException("Connection not in the usedConnections array");
             }
         }
-    }
-
-    //получаю число свободных подключений
-    public int getNumberAvailableConnections() {
-        return availableConnections.size();
     }
 }
