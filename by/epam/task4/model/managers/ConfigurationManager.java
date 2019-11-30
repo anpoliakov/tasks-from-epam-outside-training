@@ -1,65 +1,53 @@
-package by.epam.task4.configuration;
+package by.epam.task4.model.managers;
 
-import by.epam.task4.ConnectionPool;
+import by.epam.task4.model.db.ConnectionPool;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.Properties;
 
 public class ConfigurationManager {
     private static ConfigurationManager configManager;
 
-    private String PATH_CONFIG_DB = "src/by/epam/task4/configuration/configDB.properties";
+    private String PATH_CONFIG_DB = "src/by/epam/task4/configuration/configdb.properties";
     private String PATH_REQUESTS_SQL = "src/by/epam/task4/configuration/requestsSQL.properties";
     private Properties properties;
-    private ConnectionPool connectionPool;
 
     private ConfigurationManager() {
         properties = new Properties();
         try {
             properties.load(new FileInputStream(PATH_CONFIG_DB));
             properties.load(new FileInputStream(PATH_REQUESTS_SQL));
-            connectionPool = createConnectionPool();
+            initConnectionPool();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static ConfigurationManager getConfigurationManager (){
+    public static ConfigurationManager getConfigManager(){
         if (configManager == null) {
             synchronized (ConfigurationManager.class) {
-                if (configManager == null)
+                if (configManager == null){
                     configManager = new ConfigurationManager();
+                }
             }
         }
         return configManager;
     }
 
-    //создать connection pool
-    private ConnectionPool createConnectionPool(){
+    //инициализация пула коннектов
+    private void initConnectionPool(){
+        ConnectionPool pool = ConnectionPool.getConnectionPool();
+
+        //файлы могут быть = null - нет таких строк ??
         String login = properties.getProperty("db.login");
         String password = properties.getProperty("db.password");
         String driver = properties.getProperty("db.driver");
         String url = properties.getProperty("db.url");
-        int sizePool = Integer.parseInt(properties.getProperty("sizePool"));
-        //файлы могут быть = null - нет таких строк
-        return (new ConnectionPool(login,password,url,driver,sizePool));
-    }
+        Integer sizePool = Integer.parseInt(properties.getProperty("sizePool"));
 
-    //получить соединение
-    public Connection getConnection(){
-        if(connectionPool != null){
-            return connectionPool.getConnection();
-        }else {
-            return null;
-        }
-    }
-
-    //закрыть соединение
-    public void returnConnection(Connection connection){
-        connectionPool.returnConnection(connection);
+        pool.setConfigPool(login,password,driver,url,sizePool);
     }
 
     // получаю sql запрос из файла
