@@ -1,0 +1,11 @@
+body{
+	margin: 0px;
+	text-align: center;
+}
+
+#mainDiv{
+	padding-top: 15px;
+	padding-bottom: 15px;
+	border: 3px solid green;
+	background: #D3D3D3;
+}

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>Calculator</title>
+	<link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+	<div id="mainDiv">
+		<p>Number 1 <input type="text" id="number1"></p>
+		<p>Number 2 <input type="text" id="number2"></p>
+
+		<input type="button" onclick="operation(1)" value="Addition [+]">
+		<input type="button" onclick="operation(2)" value="Subtraction [-]">
+		<input type="button" onclick="operation(3)" value="Multiplication [*]">
+		<input type="button" onclick="operation(4)" value="Division [/]">
+
+		<p id="result"></p>
+	</div>
+	
+	<script src="main.js"></script>
+</body>
+</html>
