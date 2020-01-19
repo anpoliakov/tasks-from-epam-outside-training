@@ -1,0 +1,2 @@
+const MIN_LENGTH_NAME = 3;
+const MIN_LENGTH_SURNAME = 3;
