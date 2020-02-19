@@ -1,29 +1,51 @@
-let signInButton = document.getElementById('signinButton');
-signInButton = addEventListener("click", submit);
-
-function submit(event) {
-    event.preventDefault();
+function submit() {
     let user = getFormData();
     authenticateUser(user);
 }
 
+
 function getFormData() { //получаем данные при сабмите
-let user = {};
+    let user = {};
     let data = document.getElementsByClassName('signin');
     for (let i = 0; i < data.length; i++) {
         let name = data[i].name;
         let value = data[i].value;
-        user[name] = [value];
+        user[name] = value;
     }
-    console.log(user);
-        return(user);
+    return(user);
 }
 
+
 function authenticateUser(user) {
-    let dataBase = JSON.parse(localStorage.getItem('usersDb'));
-    if (dataBase.hasOwnProperty(user.name) == true && dataBase[user.name].password == user.password) { // если в объекте пристутствует объект с ключом user.name, то сравниваем пароль. 
-        document.location.href = "userpage.html"; // загрузка новой страницы
-    } else {
-        alert("Please enter correct data or register");
+    let json = JSON.stringify(user);
+    let xhr = new XMLHttpRequest();
+
+    xhr.responseType = "json";
+    xhr.onload = function(){
+        if(xhr.status == 200){
+            checkStatusRequest(xhr.response);
+        }else{
+            alert("ERROR: " + xhr.statusText + " status: " + xhr.status);
+        }
+    } 
+
+    xhr.open('POST', '/firstservlet', true);
+    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhr.send(json);
+    
+}
+
+
+function checkStatusRequest(object){
+    let name = object.name;
+    let statusReq = object.status;
+
+    if(statusReq == -2){
+        document.getElementById('validerrors').innerHTML = "There is no such user!";
+    }else{
+        console.log("Имя - " + name);
+        document.getElementById('title').innerHTML = "Hello " + name;
+        document.getElementById('bodyPage').innerHTML = "<center><p>Your Page .... </p></center>"
     }
 }
+

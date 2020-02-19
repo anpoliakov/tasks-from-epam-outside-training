@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>User</title>
-    </head>
-    <body>
-           <div>
-               <h1>You were signed in!</h1>
-           </div> 
-    </body>
+	<title>User</title>
+</head>
+<body>
+	<div>
+		<h1>You were signed in!</h1>
+		<span id="userName">Hello</span>
+	</div> 
+
+	<script type="text/javascript" src="script_for_signin.js"></script>
+	<script>
+		document.addEventListener("load", printName(xhr.response));
+	</script>
+</body>
 </html>

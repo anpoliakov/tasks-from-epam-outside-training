@@ -49,19 +49,28 @@ function addUserToDataBase(obj) {
     console.log(json);
 
     let xhr = new XMLHttpRequest();
+
+    xhr.responseType = "json";
+    xhr.onload = function(){
+        if(xhr.status == 200){
+            checkBD(xhr.response);
+        }else{
+            alert("ERROR: " + xhr.statusText + " status: " + xhr.status);
+        }
+    } 
+
     xhr.open('POST', '/firstservlet');
     xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-
-    // xhr.responseType = "json";
-    // xhr.onload = function(){
-    //     if(xhr.status == 200){
-    //         enterResponse(xhr.response);
-    //     }else{
-    //         alert("ERROR: " + xhr.statusText + " status: " + xhr.status);
-    //     }
-    // }
-
     xhr.send(json);
+}
 
-    alert("Successful registration");
+
+function checkBD(infoFromBD){
+    let statusRequest = infoFromBD.status;
+    if(statusRequest == -1){
+        document.getElementById('validateerrors').innerHTML = "Such a user exists!";
+    }else{
+        alert("Successful registration");
+        document.location.href = "signin.html";
+    }
 }

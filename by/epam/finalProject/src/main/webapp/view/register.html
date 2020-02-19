@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Registration</title>
+</head>
+<body>
+    <div>
+        <h1>Registration page</h1>  
+    </div>
+    <div>
+        <form>
+            <input type="text" name="name" placeholder="First name" class="register" required><br>
+            <input type="text" name="surname" placeholder="Surname" class="register" required><br>
+            <input type="text" name="email" placeholder="Email" class="register" required><br>
+            <input type="password" name="password" placeholder="Password" class="register" required><br>
+            <input type="password" name="passwordRepeat" placeholder="repeat password" class="register" required><br>
+
+            <p>Role: 
+                <select size = "1" required class="register" name="role">
+                    <option value="owner">Owner</option>
+                    <option value="forester">Forester</option>
+                </select>
+            </p>
+        </form>
+
+        <input type="submit" name="submit" value="Register" id="registerButton">
+        <a href="../index.html">Back</a>
+        <p id="validateerrors"></p>
+    </div>
+    
+    <script charset="utf-8" type="text/javascript" src="script.js"></script>
+</body>
+</html>
